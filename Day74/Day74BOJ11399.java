@@ -21,17 +21,13 @@ public class Day74BOJ11399 {
 		Arrays.sort(arr); // 최소 시간을 구하기 위한 오름차순 정렬
 
 		int sum = 0;
-		int[] tmp = new int[n];
+		int totalSum = 0;
 		for(int i = 0; i < n; i++) {
-			for(int j = 0; j <= i; j++) {
-				tmp[i] += arr[j];	//빈 배열 tmp에 i까지의 합 넣기
-			}
+			sum += arr[i];
+			totalSum += sum;
 		}
-		
-		for(int i = 0; i < n; i++) {
-			sum += tmp[i];
-		}
-		System.out.println(sum);
+		System.out.println(totalSum);
 	}
 
 }
+// 과정 https://gimbalja.tistory.com/181
