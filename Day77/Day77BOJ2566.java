@@ -7,8 +7,6 @@ public class Day77BOJ2566 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		int[][] arr = new int[9][9];
-		
 		// 배열에 넣을 필요 없이 처음부터 끝까지 크기 비교
 		int max = 0;
 		int row = 0;
@@ -19,12 +17,13 @@ public class Day77BOJ2566 {
 				if(max < n) {
 					max = n;
 					
-					row = i+1;
-					col = j+1;
+					row = i;
+					col = j;
 				}
 			}
 		}
-		System.out.print(max + "\n" + row + " " + col);
+		System.out.print(max + "\n" + (row+1) + " " + (col+1));
 	}
 
 }
+// 과정 https://gimbalja.tistory.com/184
