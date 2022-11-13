@@ -1,4 +1,4 @@
-package codingtestAndAlgorithm;
+package codingtestAndAlgorithm.Day78;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,31 +14,29 @@ public class Day78BOJ2563 {
 		
 		// 색종이의 수
 		int n = Integer.parseInt(br.readLine());
-		int[][] arr = new int[n][2];
+		int[][] paper = new int[100][100];
 		
-		for(int i = 0; i < n; i++) {
+		int area = 0;	//넓이 변수
+		for(int i = 0; i < n; i++) {	
 			//StringTokenizer는 한 줄씩 인식
 			st = new StringTokenizer(br.readLine());	
-			arr[i][0] = Integer.parseInt(st.nextToken());
-			arr[i][1] = Integer.parseInt(st.nextToken());
-		}
-		
-		// 디버깅
-		System.out.println(Arrays.deepToString(arr));
-		
-		int sum = n*100;
-		for(int i = 0; i < n; i++) {
-			for(int j = 1; j < n; j++) {
-				if( (arr[j][0] < arr[i][0]+10 && arr[i][0]+10 < arr[j][0]+10) && (arr[j][1] < arr[i][1] && arr[i][1] < arr[j][1]+10)) {
-					
-					sum -= Math.abs(arr[i][0]+10-arr[j][0]) * Math.abs(arr[j][1]+10-arr[i][1]);
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+			
+			for(int j = x; j < x + 10; j++) {	//x좌표 한줄당
+				for(int k = y; k < y + 10; k++) {	//y좌표 모두 확인
+					if(paper[j][k] == 0) {	//아직 해당 좌표가 칠해지지 않았다면
+						paper[j][k] = 1;	//칠하고
+						area++;	//넓이에 더하기
+					} 
 				}
 			}
-				
+			
 		}
 		
-		System.out.println(sum);
+		System.out.println(area);
+		
 	}
 
 }
-// 오답 처리된 코드
+// 과정 https://gimbalja.tistory.com/185
