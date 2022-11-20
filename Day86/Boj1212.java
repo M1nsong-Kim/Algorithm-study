@@ -13,49 +13,22 @@ public class Boj1212 {
 		String octal = br.readLine();
 		int len = octal.length();
 		
-		switch(octal.charAt(0)-'0') {	// 첫자리엔 0이 붙어선 안 된다
-		case 7 :
-			sb.append(111);
-			break;
-		case 6 :
-			sb.append(110);
-			break;
-		case 5 :
-			sb.append(101);
-			break;
-		case 4 :
-			sb.append(100);
-			break;
-		case 3 :
-			sb.append(11);
-			break;
-		case 2 :
-			sb.append(10);
-			break;
-		case 1 :
-			sb.append(1);
-			break;
-		case 0 :
-			sb.append(0);	//000을 입력해도 오류가 나지 않도록
-			break;
-		}
-		
-		for(int i = 1; i < len; i++) {
+		for(int i = 0; i < len; i++) {
 			switch(octal.charAt(i)-'0') {
 			case 7 :
-				sb.append(111);
+				sb.append("111");
 				break;
 			case 6 :
-				sb.append(110);
+				sb.append("110");
 				break;
 			case 5 :
-				sb.append(101);
+				sb.append("101");
 				break;
 			case 4 :
-				sb.append(100);
+				sb.append("100");
 				break;
 			case 3 :
-				sb.append("011");	// 문자열이 아닌 숫자로 입력하면 앞에 붙은 0이 생략된다
+				sb.append("011");
 				break;
 			case 2 :
 				sb.append("010");
@@ -68,7 +41,15 @@ public class Boj1212 {
 				break;
 			}
 		}
+
+		// 앞애 0이 붙는 최대 개수는 2개 -> 0은 최대 2번 삭제
+		for(int i = 0; i < 2; i++) {
+			if(sb.charAt(0) - '0' == 0) { //0으로 시작한다면
+				sb.deleteCharAt(0);
+			}
+		}
 		System.out.println(sb);
 	}
 
 }
+// 과정 https://gimbalja.tistory.com/194
