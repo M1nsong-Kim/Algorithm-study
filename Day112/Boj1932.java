@@ -24,13 +24,8 @@ public class Boj1932 {
 		
 		for(int i = 1; i < n+1; i++) {
 			for(int j = 1; j < i+1; j++) {
-				if(j == 1) { // 가장 앞자리 → 그전 줄의 가장 앞자리에서만 받을 수 있음
-					dp[i][j] = dp[i-1][j] + arr[i][j];
-				}else if(j == i) {	// 가장 끝자리 → 그전 줄의 가장 끝자리에서만 받을 수 있음
-					dp[i][j] = dp[i-1][j-1] + arr[i][j];
-				}else {
-					dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + arr[i][j];
-				}
+				// dp[][0] == 0, dp[i-1][j] == 0이 들어가 있어 영향을 주지 않는다
+				dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + arr[i][j];
 				// 디버깅 System.out.println("dp["+i+"]["+j+"] : "+dp[i][j]);
 			}
 		}
