@@ -17,14 +17,14 @@ public class Boj15652 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		arr = new int[m];
-		DFS(0);
+		DFS(0, 0);
 		
 		bw.flush();
 		bw.close();
 
 	}
 
-	static void DFS(int depth) throws IOException{
+	static void DFS(int start, int depth) throws IOException{
 		if(depth == m) {
 			for(int num : arr) {
 				bw.write(num+" ");
@@ -33,16 +33,9 @@ public class Boj15652 {
 			return;
 		}
 		
-		for(int i = 0; i < n; i++) {
-			if(depth == 0) {	// depth-1이 -1이 되지 않도록 주는 조건
-				arr[depth] = i+1;
-				DFS(depth+1);
-			}else{
-				if(i+1 >= arr[depth-1]) {	// 같거나 크다 == 비내림차순
-				arr[depth] = i+1;
-				DFS(depth+1);	
-				}
-			}
+		for(int i = start; i < n; i++) {	// i를 매개변수 start부터
+			arr[depth] = i+1;
+			DFS(i, depth+1);	// 중복을 허용하도록
 		}
 	}
 }
