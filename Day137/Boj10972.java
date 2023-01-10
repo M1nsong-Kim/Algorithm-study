@@ -4,76 +4,68 @@ import java.io.*;
 import java.util.*;
 
 public class Boj10972 {
-
-	static int n, count;
-	static int[] arr, nums;
-	static boolean[] visited;
-	static int[][] permutation;
+	
+	static int[] nums;
 	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st;
 		
-		n = Integer.parseInt(br.readLine());
-		
-		arr = new int[n];
+		int n = Integer.parseInt(br.readLine());
 		nums = new int[n];
-		visited = new boolean[n];
-		permutation = new int[getSize()][n];
-		
+
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < n; i++) {
 			nums[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		getPermutation(0);
-		
-		for(int i = 0; i < getSize(); i++) {			
-			if(Arrays.equals(permutation[i], nums)) {	// 같으면
-				if(i+1 >= getSize()) {
-					System.out.println(-1);
-				}else {					
-					for(int val : permutation[i+1]) {
-						System.out.print(val+" ");// 배열 모두 출력하고
-					}					
-				}
-				return;	// 반복문 종료
+		if(nextPermutation()) {	// 그 다음 순열이 존재한다면
+			for(int val : nums) {
+				bw.write(val+" ");
 			}
+		}else {
+			bw.write("-1");
 		}
+		bw.flush();
+		bw.close();
 		
 	}
 	
-	// 배열 개수 구하기
-	public static int getSize() {
-		int[] dp = new int[10_001];
-		dp[2] = 2;
-		for(int i = 3; i < n+1; i++) {
-			dp[i] = dp[i-1]*i;
+	// 다음 순열 있는지 체크
+	public static boolean nextPermutation() {
+		
+		int i = nums.length - 1;
+		while(i > 0 && nums[i-1] >= nums[i]) {	// 내림차순이 되기 직전의 자리 찾기
+			i--;
 		}
-		return dp[n];
-	}
-	
-	// DFS 활용하여 전체 순열 구하기
-	public static void getPermutation(int depth) {
-		// 입력된 숫자의 깊이까지의 배열 출력
-		if(depth == n) {
-			if(count < getSize()) {				
-				for(int i = 0; i < n; i++) {
-					permutation[count][i] = arr[i];
-				}
-			}
-			count++;
+		if(i < 1) {	// i == 0 --> 전체 내림차순(즉, 가장 마지막 순열)
+			return false;
 		}
 		
-		for(int i = 0; i < n; i++) {
-			// 방문하지 않은 노드라면
-			if(!visited[i]) {
-				visited[i] = true;	// 방문상태로 변경 후 	
-				arr[depth] = i+1; 	// 그 깊이의 노드에 값 넣기
-				getPermutation(depth+1);	// 다음 노드 : 깊이+1
-				visited[i] = false;	// 다시 false로 돌려서 검사할 수 있도록
-			}
+		int j = nums.length - 1;
+		while(nums[i-1] >= nums[j]) {	// 내림차순 되기 직전 수 +1 찾기
+			j--;
 		}
+		
+		swap(i-1, j);	// 자리 바꾸기
+		
+		j = nums.length-1;
+		
+		while(i < j) {
+			swap(i, j);
+			i++;
+			j--;
+		}
+		return true;
+	}
+	
+	
+	// 자리 바꾸기
+	public static void swap(int n, int m) {
+		int temp = nums[n];
+		nums[n] = nums[m];
+		nums[m] = temp;
 	}
 
 }
