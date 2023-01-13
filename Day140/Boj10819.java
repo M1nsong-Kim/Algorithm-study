@@ -6,9 +6,9 @@ import java.util.*;
 public class Boj10819 {
 	
 	static int n, count;
+	static int max = Integer.MIN_VALUE;
 	static int[] arr, nums;
 	static boolean[] visited;
-	static int[][] permutation;
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	
 	public static void main(String[] args) throws IOException{
@@ -19,7 +19,6 @@ public class Boj10819 {
 		arr = new int[n];
 		nums = new int[n];
 		visited = new boolean[n];
-		permutation = new int[getSize()][n];
 		
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < n; i++) {
@@ -28,30 +27,16 @@ public class Boj10819 {
 		
 		DFS(0);
 		
-//		System.out.println(count);
-//		System.out.println(Arrays.deepToString(permutation));
-		System.out.println(getMax());
+		bw.write(max+"");
+		bw.flush();
+		bw.close();
 	}
-	
-	public static int getSize() {
-        int[] dp = new int[10_001];
-        dp[2] = 2;
-        for(int i = 3; i < n+1; i++) {
-            dp[i] = dp[i-1]*i;
-        }
-        return dp[n];
-    }
-    
+
     // DFS 활용하여 전체 순열 구하기
     public static void DFS(int depth) {
         // 입력된 숫자의 깊이까지의 배열 출력
         if(depth == n) {
-            if(count < getSize()) {                
-                for(int i = 0; i < n; i++) {
-                    permutation[count][i] = arr[i];
-                }
-            }
-            count++;
+            max = Math.max(getSum(), max);
             return;        // 멈추기
         }
         
@@ -66,16 +51,12 @@ public class Boj10819 {
         }
     }
     
-    static int getMax() {
-    	int max = Integer.MIN_VALUE;
-    	for(int i = 0; i < count; i++) {
-    		int sum = 0;
-    		for(int j = 0; j < n-1; j++) {
-    			sum += Math.abs(permutation[i][j]-permutation[i][j+1]);
-    		}
-    		max = Math.max(max, sum);
+    static int getSum() {
+    	int sum = 0;
+    	for(int i = 0; i < n-1; i++) {
+    		sum += Math.abs(arr[i]-arr[i+1]);
     	}
-    	return max;
+    	return sum;
     }
 }
 // 과정 https://gimbalja.tistory.com/312
