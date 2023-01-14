@@ -37,10 +37,9 @@ public class Boj6603 {
 	
 	static void DFS(int depth) throws IOException{
 		if(depth == 6) {	// 로또는 총 6개 숫자
-			for(int i : arr) {
-				if(i != 0) {					
-					bw.write(i + " ");
-				}
+			// arr에는 0 0도 들어가므로 6개 숫자만 꺼낼 수 있도록 제한을 둔다		
+			for(int i = 0; i < 6; i++) {	
+				bw.write(arr[i] + " ");
 			}
 			bw.newLine();
 			return;
