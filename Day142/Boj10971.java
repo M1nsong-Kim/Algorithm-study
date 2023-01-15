@@ -53,19 +53,13 @@ public class Boj10971 {
 	public static int getSum() {
 		int sum = 0;
 		for(int i = 0; i < n-1; i++) {			
-			if(W[arr[i]][arr[i+1]] != 0) {
-//					System.out.println("W["+arr[i]+"]["+arr[i+1]+"]");
-				sum += W[arr[i]][arr[i+1]];
-			}else {
-				sum += 10_000_000;	// 0이다 == 갈 수 없는 경로 == 최대값으로 처리하여 최소값이 될 수 없도록
+			if(W[arr[i]][arr[i+1]] == 0 || W[arr[n-1]][arr[0]] == 0){
+				return 10_000_001;	// 0이다 == 갈 수 없는 경로 == 최대값으로 처리하여 최소값이 될 수 없도록
 			}
+			sum += W[arr[i]][arr[i+1]];
 		}
-		if(W[arr[n-1]][arr[0]] != 0) {			
-			sum += W[arr[n-1]][arr[0]];
-		}else {
-			sum += 10_000_000;
-		}
-//		System.out.println();
+		sum += W[arr[n-1]][arr[0]];
 		return sum;
 	}
 }
+// 과정 https://gimbalja.tistory.com/314
