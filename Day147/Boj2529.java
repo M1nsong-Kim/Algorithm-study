@@ -6,7 +6,6 @@ import java.util.*;
 public class Boj2529 {
 
 	static int k;
-	static int[] arr;
 	static char[] inequality;
 	static boolean[] visited = new boolean[10];	// 0~9 숫자 확인 고정
 	static ArrayList<String> list = new ArrayList<>();
@@ -31,17 +30,11 @@ public class Boj2529 {
 	}
 	
 	 static boolean checkInequality(int n, int m, char ch) {
-		 boolean check = true;
-        if (ch == '<'){
-        	if(n > m) {
-        		check = false;
-        	}
+		 if (ch == '<'){
+        	return n < m;	// 부등호에 맞는 숫자들인지 아닌지에 따라 true/false 반환
         }else {
-        	if(n < m) {
-        		check = false;
-        	}
+        	return n > m;
         }
-        return check;
     }
 
 	static void DFS(String nums, int depth) {
