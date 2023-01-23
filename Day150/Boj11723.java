@@ -5,8 +5,7 @@ import java.util.*;
 
 public class Boj11723 {
 
-	// 삭제할 때 인덱스가 아닌 값으로 인식하기 위해 String list
-	static ArrayList<String> S = new ArrayList<>();
+	static Set<Integer> S = new HashSet<>();	// 중복 제거
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	
 	public static void main(String[] args) throws IOException{
@@ -21,16 +20,16 @@ public class Boj11723 {
 			
 			switch(command) {
 			case "add":
-				add(st.nextToken());
+				add(Integer.parseInt(st.nextToken()));
 				break;
 			case "remove":
-				remove(st.nextToken());
+				remove(Integer.parseInt(st.nextToken()));
 				break;
 			case "check":
-				check(st.nextToken());
+				check(Integer.parseInt(st.nextToken()));
 				break;
 			case "toggle":
-				toggle(st.nextToken());
+				toggle(Integer.parseInt(st.nextToken()));
 				break;
 			case "all":
 				all();
@@ -45,21 +44,15 @@ public class Boj11723 {
 		bw.close();
 	}
 	
-	static void add(String x) {
-		if(S.contains(x)) {	// S에 x가 있으면
-			return;
-		}
+	static void add(int x) {
 		S.add(x);
 	}
 		
-	static void remove(String x) {
-		if(!S.contains(x)) {	// S에 x가 없으면
-			return;
-		}
+	static void remove(int x) {
 		S.remove(x);
 	}
 	
-	static void check(String x) throws IOException{
+	static void check(int x) throws IOException{
 		if(S.contains(x)) {
 			bw.write(1+"\n");
 		}else {			
@@ -67,7 +60,7 @@ public class Boj11723 {
 		}
 	}
 	
-	static void toggle(String x) {
+	static void toggle(int x) {
 		if(S.contains(x)) {	// 있으면
 			S.remove(x);	// 제거
 			return;
@@ -76,16 +69,14 @@ public class Boj11723 {
 	}
 	
 	static void all() {
-		empty();	// 비우고
 		for(int i = 1; i < 21; i++) {
-			S.add(i+"");
+			S.add(i);
 		}
 	}
 	
 	static void empty() {
-		for(int i = 0; i < S.size(); i++) {
-			S.remove(i+"");
-		}
+		S.clear();
 	}
 
 }
+// 과정 https://gimbalja.tistory.com/322
