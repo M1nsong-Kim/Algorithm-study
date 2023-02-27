@@ -22,3 +22,4 @@ public class Boj24265 {
 		bw.close();
 	}
 }
+// 과정 https://gimbalja.tistory.com/376
