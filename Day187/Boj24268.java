@@ -16,11 +16,8 @@ public class Boj24268 {
 		int c = Integer.parseInt(br.readLine());
 		int n0 = Integer.parseInt(br.readLine());
 
-		for(int n = n0; n < 101; n++) {
-			if(a1*n + a0 > c*n) {
-				answer = 0;
-				break;
-			}
+		if((a1 * n0 + a0 > c * n0) || (c < a1)) {
+			answer = 0;
 		}
 		
 		bw.write(answer+"");
