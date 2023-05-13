@@ -21,31 +21,28 @@ public class Boj3085 {
 			for(int j = 0; j < n; j++) {
 				candies[i][j] = str.charAt(j);
 			}
-		}
+		} 
 		
 		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n-1; j++) {
-				// 가로가 다르다
-				if(candies[i][j] != candies[i][j+1]) {
-					// 바꾸기
-					change(i, j, i, j+1);
-					check();
-					// 돌려놓기
-					change(i, j, i, j+1);
-				}
-			}
-		}
-		
-		for(int i = 0; i < n-1; i++) {
 			for(int j = 0; j < n; j++) {
-				// 세로가 다르다
-				if(candies[i][j] != candies[i+1][j]) {
+				// 가로 세로 다를 떄만 바꾸지 말고 모두 바꿔봄 -> 모든 행, 열 확인 가능
+				if(j < n-1) { 
+					change(i, j, i, j+1);	// 자리 바꾸기
+					max = Math.max(check(i, j), max);	// 바뀐 대상 기준 세기
+					max = Math.max(check(i, j+1), max);	// 바뀐 대상 기준 세기
+					change(i, j, i, j+1);	// 원상복구
+				}
+
+				if(i < n-1) {
 					change(i, j, i+1, j);
-					check();
+					max = Math.max(check(i, j), max);
+					max = Math.max(check(i+1, j), max);
 					change(i, j, i+1, j);
+					
 				}
 			}
 		}
+
 		System.out.println(max);
 	}
 	
@@ -55,31 +52,39 @@ public class Boj3085 {
 		candies[x2][y2] = temp;
 	}
 
-	static int check() {
-		for(int i = 0; i < n; i++) {
-			int count = 1;
-			for(int j = 0; j < n-1; j++) {
-				if(candies[i][j] == candies[i][j+1]) {
-					count++;
-				}else {
-					count = 1;	// 다르면 1부터 다시 시작
-				}
-				max = Math.max(count, max);
-			}
-		}
-		
-		for(int i = 0; i < n; i++) {
-			int count = 1;
-			for(int j = 0; j < n-1; j++) {
-				if(candies[j][i] == candies[j+1][i]) {
-					count++;
-				}else {
-					count = 1;
-				}
-				max = Math.max(count, max);
-			}
-		}
-		return max;
+	static int check(int x, int y) {
+		int cnt1 = 1;	// candies[x][y] 포함해서 1부터 세기
+        for (int i = x-1; i >= 0; i--) {
+            if (candies[i][y] == candies[x][y]) {            	
+            	cnt1++;
+            } else {            	
+            	break;
+            } 
+        }
+        for (int i = x+1; i < n; i++) {
+            if (candies[i][y] == candies[x][y]){            	
+            	cnt1++;
+            } else {            	
+            	break;
+            } 
+        }
+
+        int cnt2 = 1;	// candies[x][y] 포함해서 1부터 세기
+        for (int i = y-1 ; i >= 0; i--) {
+            if (candies[x][i] == candies[x][y]){            	
+            	cnt2++;
+            } else {            	
+            	break;
+            } 
+        }
+        for (int i = y+1; i < n; i++) {
+            if (candies[x][i] == candies[x][y]){            	
+            	cnt2++;
+            } else {            	
+            	break;
+            } 
+        }
+		return Math.max(cnt1, cnt2);
 	}
 
 	static int read() throws Exception{
